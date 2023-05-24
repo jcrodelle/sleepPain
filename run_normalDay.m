@@ -4,7 +4,7 @@
 clear all
 close all
 
-d = 9.5; %number of days
+d = 7; %number of days
 min_d = d*24*60; % in minutes
 dt = 0.25; % time step in minutes
 tSpan=0:dt:min_d; % span of time for simulation
@@ -61,7 +61,16 @@ LightBlocks = I_vec == 600;
 
 
 
-%Plot the output of the sleep model
+%% Plot the output of the sleep model
+% for x labels in 4 hour increments
+% xticknumbers = [0:4:(d*24)]*60;
+% xticklabelNames = repmat([8 12 16 20 0 4],1,d+1);
+
+% if want just days instead
+xticknumbers = 0:1440:d*1440;
+xticklabelNames = string(1:d);
+
+
 figure 
 subplot(3,1,1)
 plot(t,x(:,1), 'color',[0.00,0.37,0.74],'LineWidth',3)
@@ -74,8 +83,8 @@ plot(t,SleepBlocks-1,'*','color',[0.6 0.6 0.6])
 %rectangle('Position',[sleeponset(1) 0 sleepdurs(1) 25],'facecolor',[0.7 0.7 0.7 0.3],'edgecolor',[0.7 0.7 0.7 0.3])
 title('Firing Rate of Sleep Populations')
 legend('fWake', 'fSleep')
-xticks([0 4 8 12 16 20 24 28 32 36 40 44 48 52 56 60 64 68 72 76 80 84 88 92 96 100 104 108 112 116 120 124 128 132 136 140 144 148 152]*60)
-xticklabels({'8', '12', '16', '20', '0', '4', '8', '12', '16','20','0', '4', '8', '12', '16', '20', '0', '4', '8', '12', '16', '20', '0', '4', '8', '12', '16', '20', '0', '4', '8', '12', '16', '20', '0', '4', '8', '12', '16'})
+xticks(xticknumbers)
+xticklabels(string(xticklabelNames))
 xlabel('Clock time')
 ylabel('Firing rates (Hz)')
 ylim([-1 10])
@@ -90,8 +99,8 @@ plot(t,310*LightBlocks-8,'*','color',[1.0 1.0 0.6])
 plot(t,SleepBlocks,'*','color',[0.6 0.6 0.6])
 ylim([-1 303])
 xlim([0 d*24*60])
-xticks([0 4 8 12 16 20 24 28 32 36 40 44 48 52 56 60 64 68 72 76 80 84 88 92 96 100 104 108 112 116 120 124 128 132 136 140 144 148 152]*60)
-xticklabels({'8', '12', '16', '20', '0', '4', '8', '12', '16','20','0', '4', '8', '12', '16', '20', '0', '4', '8', '12', '16', '20', '0', '4', '8', '12', '16', '20', '0', '4', '8', '12', '16', '20', '0', '4', '8', '12', '16'})
+xticks(xticknumbers)
+xticklabels(string(xticklabelNames))
 title('Sleep Homeostatic Drive')
 xlabel('Clock time')
 ylabel('Slow Wave Activity')
@@ -106,9 +115,8 @@ plot(t,SleepBlocks-1.2,'*','color',[0.6 0.6 0.6])
 ylim([-1.3 1.2])
 xlim([0 d*24*60])
 title('Sleep Circadian Component')
-xticks([0 4 8 12 16 20 24 28 32 36 40 44 48 52 56 60 64 68 72 76 80 84 88 92 96 100 104 108 112 116 120 124 128 132 136 140 144 148 152]*60)
-xticklabels({'8', '12', '16', '20', '0', '4', '8', '12', '16','20','0', '4', '8', '12', '16', '20', '0', '4', '8', '12', '16', '20', '0', '4', '8', '12', '16', '20', '0', '4', '8', '12', '16', '20', '0', '4', '8', '12', '16'})
-%legend('Sleep Homeostat')
+xticks(xticknumbers)
+xticklabels(string(xticklabelNames))
 xlabel('Clock time')
 ylabel('Circadian Activity')
 set(gca,'fontsize',18)
@@ -139,13 +147,13 @@ plot(t,5.9*LightBlocks-5,'*','color',[1.0 1.0 0.6])
 % plot sleep blocks
 plot(t,SleepBlocks-0.65,'*','color',[0.6 0.6 0.6])
 xlabel('Clock Time')
-ylabel('Pain Sensitivity')
-title('Total Pain Sensitivty')
+ylabel('Pain Intensity')
+title('Total Pain Intensity')
 ylim([-0.7 0.9])
 xlim([0 d*24*60])
 yticks([-.65 -.3 0 .3 .6 .9])
-xticks([0 4 8 12 16 20 24 28 32 36 40 44 48 52 56 60 64 68 72 76 80 84 88 92 96 100 104 108 112 116 120 124 128 132 136 140 144 148 152]*60)
-xticklabels({'8', '12', '16', '20', '0', '4', '8', '12', '16','20','0', '4', '8', '12', '16', '20', '0', '4', '8', '12', '16', '20', '0', '4', '8', '12', '16', '20', '0', '4', '8', '12', '16', '20', '0', '4', '8', '12', '16'})
+xticks(xticknumbers)
+xticklabels(string(xticklabelNames))
 set(gca,'fontsize',18)
 subplot(3,1,2)
 plot(t, H_pain,'color',[0.49,0.18,0.56],'LineWidth',3)
@@ -155,13 +163,13 @@ plot(t,5.9*LightBlocks-5,'*','color',[1.0 1.0 0.6])
 % plot sleep blocks
 plot(t,SleepBlocks-0.65,'*','color',[0.6 0.6 0.6])
 xlabel('Clock Time')
-ylabel('Pain Sensitivity')
+ylabel('Pain Intensity')
 title('Pain Homeostatic Drive')
 ylim([-0.65 0.9])
 xlim([0 d*24*60])
 yticks([-.6 -.3 0 .3 .6 .9])
-xticks([0 4 8 12 16 20 24 28 32 36 40 44 48 52 56 60 64 68 72 76 80 84 88 92 96 100 104 108 112 116 120 124 128 132 136 140 144 148 152]*60)
-xticklabels({'8', '12', '16', '20', '0', '4', '8', '12', '16','20','0', '4', '8', '12', '16', '20', '0', '4', '8', '12', '16', '20', '0', '4', '8', '12', '16', '20', '0', '4', '8', '12', '16', '20', '0', '4', '8', '12', '16'})
+xticks(xticknumbers)
+xticklabels(string(xticklabelNames))
 set(gca,'fontsize',18)
 subplot(3,1,3)
 plot(t, C_pain,'color',[0.13,0.67,0.64],'LineWidth',3)
@@ -171,13 +179,13 @@ plot(t,5.9*LightBlocks-5,'*','color',[1.0 1.0 0.6])
 % plot sleep blocks
 plot(t,SleepBlocks-0.65,'*','color',[0.6 0.6 0.6])
 xlabel('Clock Time')
-ylabel('Pain Sensitivity')
+ylabel('Pain Intensity')
 title('Pain Circadian Component')
 ylim([-0.65 0.9])
 xlim([0 d*24*60])
 yticks([-.6 -.3 0 .3 .65 .9])
-xticks([0 4 8 12 16 20 24 28 32 36 40 44 48 52 56 60 64 68 72 76 80 84 88 92 96 100 104 108 112 116 120 124 128 132 136 140 144 148 152]*60)
-xticklabels({'8', '12', '16', '20', '0', '4', '8', '12', '16','20','0', '4', '8', '12', '16', '20', '0', '4', '8', '12', '16', '20', '0', '4', '8', '12', '16', '20', '0', '4', '8', '12', '16', '20', '0', '4', '8', '12', '16'})
+xticks(xticknumbers)
+xticklabels(string(xticklabelNames))
 set(gca,'fontsize',18)
 
 
